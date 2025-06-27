@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Handling JS Example</title>
+</head>
+<body>
+    <h1>Error Handling in JavaScript</h1>
+    <button onclick="handleError()">Trigger Error</button>
+    <p id="output"></p>
+    <script>
+        function handleError() {
+            try {
+                // Intentionally cause an error
+                throw new Error("Something went wrong!");
+            } catch (e) {
+                document.getElementById('output').textContent = "Caught error: " + e.message;
+            }
+        }
+
+        function divideNumbers(a, b) {
+            try {
+                if (b === 0) {
+                    throw new Error("Division by zero is not allowed.");
+                }
+                console.log("Result:", a / b);
+            } catch (e) {
+                console.log("Error:", e.message);
+            } finally {
+                console.log("Execution complete.");
+            }
+        }
+
+        // Test the function
+        divideNumbers(10, 2); // Should log: Result: 5, Execution complete.
+        divideNumbers(10, 0); // Should log: Error: Division by zero is not allowed., Execution complete.
+        async function fetchData() {
+            try {
+                const response = await fetch('https://httpstat.us/500');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Data:", data);
+            } catch (error) {
+                console.log("Fetch error:", error.message);
+            } finally {
+                console.log("Fetch attempt finished.");
+            }
+        }
+
+        // Test the function
+        fetchData();
+    </script>
+</body>
+</html>
